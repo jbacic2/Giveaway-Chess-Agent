@@ -1,12 +1,12 @@
 from typing import Tuple
 from board import ChessBoard
-from agent import GiveawayChessAgent
+from agent import GiveawayChessAgent, HeuristicType
 import textColour
 
 class ChessGame:
     def __init__(self):
         self.gameBoard = ChessBoard()
-        self.agent = GiveawayChessAgent()
+        self.agent = GiveawayChessAgent(HeuristicType.PIECE_VALUE_LOCATION_WEIGHT)
         self.gameBoard.draw()
 
     def agentMove(self):
@@ -28,13 +28,13 @@ class ChessGame:
         return isEndGame
     
     def __getFromSquare(self) -> str:
-        fromSquareStr = input("Enter the square of the piece you want to move: ")
+        fromSquareStr = input("Enter the current square of the piece you want to move: ")
         (isValid, msg) = self.gameBoard.validateFromSquare(fromSquareStr)
         while not isValid:
             print(f'{textColour.PINK}=================================================={textColour.END}')
             print(msg)
             print('Please enter a new start square.')
-            fromSquareStr = input("Enter the square of the piece you want to move: ")
+            fromSquareStr = input("Enter the current square of the piece you want to move: ")
             (isValid, msg) = self.gameBoard.validateFromSquare(fromSquareStr)
         
         return (fromSquareStr, msg)

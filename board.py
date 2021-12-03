@@ -20,6 +20,14 @@ class ChessBoard:
     
     def turn(self):
         return self.board.turn
+    
+    def squaresAttackedByColour(self, colour):
+        squaresAttacked = set()
+        for square in chess.SQUARES:
+            if self.board.color_at(square) == colour:
+                for attackedSquare in self.board.attacks(square):
+                    squaresAttacked.add(attackedSquare)
+        return squaresAttacked
 
     def draw(self) -> None:
         print(f'{textColour.YELLOW}  a b c d e f g h')
@@ -126,7 +134,7 @@ class ChessBoard:
             endScore = 1
             isEndGame = True
         
-        elif self.board.is_variant_draw():
+        elif self.board.is_variant_draw() or self.board.is_variant_end():
             endScore = 0
             isEndGame = True
         
