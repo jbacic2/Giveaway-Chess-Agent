@@ -1,11 +1,10 @@
-from re import S
 from typing import Set, Tuple
 import chess
 from board import ChessBoard
 from enum import Enum
 import random
 
-MAX_DEPTH = 3
+MAX_DEPTH = 4
 WIN_SCORE = 1000000
 LOSS_SCORE = -1*WIN_SCORE
 DRAW_SCORE = 0

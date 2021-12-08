@@ -1,3 +1,4 @@
+from enum import Flag
 from typing import Set, Tuple
 import chess
 import chess.variant
@@ -114,6 +115,29 @@ class ChessBoard:
         else:
             msg = f'Moving piece {self.board.piece_at(fromSquare)} to square: '
         return (True,msg)
+    
+    #checks if there are only two bishops left of different colours
+    def checkIfDoubleBishopEndGame(self) -> bool:
+        bishopOnBlack = False
+        bishopOnWhite = False
+        bishopCount = 0
+
+        for square in chess.SQUARES:
+            if self.board.piece_at(square)  != None:
+                if self.board.piece_at(square) != chess.BISHOP:
+                    return False
+                
+                bishopCount += 1
+
+                if square % 2 == 0:
+                # square is white
+                    bishopOnWhite == True
+
+                else:
+                    bishopOnBlack == True
+        
+
+        return (bishopCount == 2) and bishopOnWhite and bishopOnBlack
 
 
     #checks if it board is at end game returns (isEndGame, score)
@@ -134,7 +158,7 @@ class ChessBoard:
             endScore = 1
             isEndGame = True
         
-        elif self.board.is_variant_draw() or self.board.is_variant_end():
+        elif self.board.is_variant_draw() or self.board.is_variant_end() or self.checkIfDoubleBishopEndGame():
             endScore = 0
             isEndGame = True
         
