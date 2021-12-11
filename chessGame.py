@@ -4,6 +4,7 @@ from agent import GiveawayChessAgent, HeuristicType
 import textColour
 
 class ChessGame:
+    
     def __init__(self):
         self.gameBoard = ChessBoard()
         self.agent = GiveawayChessAgent(HeuristicType.PIECE_VALUE_LOCATION_WEIGHT)

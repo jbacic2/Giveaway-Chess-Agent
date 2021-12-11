@@ -5,7 +5,7 @@ from board import ChessBoard
 from agent import GiveawayChessAgent, HeuristicType
 from naiveAgent import NaiveAgent
 
-TRIALS = 10
+TRIALS = 15
 
 # return 1 if player1 wins, -1 if player2 and 0 if its a draw
 def playGame(player1, player2):
@@ -22,10 +22,10 @@ def playGame(player1, player2):
         (isEndGame, score) = gameBoard.makeMove(move)
         if isEndGame:
             return score*-1
-        numMove += 1
-        print(f'have made {numMove} moves')
-        if numMove % 10 == 0:
-            gameBoard.draw()
+        # numMove += 1
+        # print(f'have made {numMove} moves')
+        # if numMove % 10 == 0:
+        #     gameBoard.draw()
 
 def runTests(player1, player2):
     player1Wins = 0
@@ -50,11 +50,12 @@ def chessBotVersusNaive(heuristicType):
 
     (chessBotWinsWhite, naiveWinsBlack) = runTests(chessBot, naive)
 
-    print('   Number wins   |         heuristic wins      |      naive bot wins')
-    print('---------------------------------------------------------------------------------')
-    print(f'  BLACK           |          {chessBotWinsBlack}              |             {naiveWinsBlack}')
-    print('---------------------------------------------------------------------------------')
-    print(f'  WHITE           |          {chessBotWinsWhite}              |             {naiveWinsWhite}')
+    print('                          |     heuristic wins     |    naive bot wins   |     draws  ')
+    print('--------------------------------------------------------------------------------------------------------------------')
+    print(f'  heuristic is BLACK     |          {chessBotWinsBlack}              |             {naiveWinsWhite}              |             {TRIALS-chessBotWinsBlack-naiveWinsWhite}')
+    
+    print('--------------------------------------------------------------------------------------------------------------------')
+    print(f'  heuristic is WHITE     |          {chessBotWinsWhite}              |             {naiveWinsBlack}              |             {TRIALS-chessBotWinsWhite-naiveWinsBlack}')
 
 def heuristicVersusHeuristic(heuristicType1, heuristicType2):
     type1Agent = GiveawayChessAgent(heuristicType1, chess.BLACK)
@@ -67,27 +68,29 @@ def heuristicVersusHeuristic(heuristicType1, heuristicType2):
 
     (type1WinsWhite, type2WinsBlack) = runTests(type1Agent,type2Agent)
 
-    print('   Number wins     |         heuristic  1 wins    |      heuristic  2 wins ')
-    print('---------------------------------------------------------------------------------')
-    print(f'  BLACK           |          {type1WinsBlack}              |             {type2WinsBlack}')
-    print('---------------------------------------------------------------------------------')
-    print(f'  WHITE           |          {type1WinsWhite}              |             {type2WinsWhite}')
+    print('                             |   heuristic  1 wins    |    heuristic  2 wins   |     draws  ')
+    
+    print('--------------------------------------------------------------------------------------------------------------------')
+    print(f'  heuristic  1 is BLACK     |          {type1WinsBlack}              |             {type2WinsWhite}              |             {TRIALS-type1WinsBlack-type2WinsWhite}')
+    
+    print('--------------------------------------------------------------------------------------------------------------------')
+    print(f'  heuristic  1 is WHITE     |          {type1WinsWhite}              |             {type2WinsBlack}              |             {TRIALS-type1WinsWhite-type2WinsBlack}')
 
-# print('Piece Value Heuristic vs Naive')
-# chessBotVersusNaive(HeuristicType.PIECE_VALUE)
-# print()
-
-# print('Piece Value Location Weight Heuristic vs Naive')
-# chessBotVersusNaive(HeuristicType.PIECE_VALUE_LOCATION_WEIGHT)
-# print()
-
-# print('Number Squares Attacked Heuristic vs Naive')
-# chessBotVersusNaive(HeuristicType.NUMBER_SQUARES_ATTACKED)
-# print()
-
-print('Piece Value Heuristic (type 1) vs Piece Value Location Weight Heuristic (type 2)')
-heuristicVersusHeuristic(HeuristicType.PIECE_VALUE, HeuristicType.PIECE_VALUE_LOCATION_WEIGHT)
+print('Piece Value Heuristic vs Naive')
+chessBotVersusNaive(HeuristicType.PIECE_VALUE)
 print()
+
+print('Piece Value Location Weight Heuristic vs Naive')
+chessBotVersusNaive(HeuristicType.PIECE_VALUE_LOCATION_WEIGHT)
+print()
+
+print('Number Squares Attacked Heuristic vs Naive')
+chessBotVersusNaive(HeuristicType.NUMBER_SQUARES_ATTACKED)
+print()
+
+# print('Piece Value Heuristic (type 1) vs Piece Value Location Weight Heuristic (type 2)')
+# heuristicVersusHeuristic(HeuristicType.PIECE_VALUE, HeuristicType.PIECE_VALUE_LOCATION_WEIGHT)
+# print()
 
 # print('Piece Value Heuristic (type 1) vs Number Squares Attacked (type 2)')
 # heuristicVersusHeuristic(HeuristicType.PIECE_VALUE, HeuristicType.NUMBER_SQUARES_ATTACKED)

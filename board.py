@@ -4,7 +4,7 @@ import chess
 import chess.variant
 import textColour
 
-class ChessBoard:
+class ChessBoard:  
     def __init__(self, fenStr = None) -> None:
         if fenStr == None:
             self.board = chess.variant.GiveawayBoard()
@@ -123,8 +123,8 @@ class ChessBoard:
         bishopCount = 0
 
         for square in chess.SQUARES:
-            if self.board.piece_at(square)  != None:
-                if self.board.piece_at(square) != chess.BISHOP:
+            if self.board.piece_type_at(square)  == None:
+                if self.board.piece_type_at(square) != chess.BISHOP:
                     return False
                 
                 bishopCount += 1
@@ -158,9 +158,13 @@ class ChessBoard:
             endScore = 1
             isEndGame = True
         
-        elif self.board.is_variant_draw() or self.board.is_variant_end() or self.checkIfDoubleBishopEndGame():
+        elif self.board.is_variant_draw() or self.board.is_variant_end() or self.checkIfDoubleBishopEndGame() or self.board.is_seventyfive_moves():
             endScore = 0
             isEndGame = True
+
+        # elif self.is75TurnRule and self.board.is_seventyfive_moves():
+        #     endScore = 0
+        #     isEndGame = True
         
         return (isEndGame, endScore)
     

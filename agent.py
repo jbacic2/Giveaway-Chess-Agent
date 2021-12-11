@@ -35,11 +35,8 @@ class GiveawayChessAgent:
         (_, move) = self.alphaBetaPrune(board, 0, True, float('-inf'),float('inf'))
         return move
     
-        # will keep track of the score in terms of how good it is for the player who's turn it is at root (depth 0)
+    # will keep track of the score in terms of how good it is for the player who's turn it is at root (depth 0)
     def alphaBetaPrune(self, board, depth, isMax, alpha, beta) -> Tuple[float, chess.Move]:
-        cl = 'WHITE: '
-        if self.colour == chess.BLACK:
-            cl = 'BLACK: '
         action = None
         (isEndGame, _) = board.checkIfEndGame()
         if isEndGame or depth == MAX_DEPTH:
@@ -154,7 +151,7 @@ class GiveawayChessAgent:
             chess.E4, chess.E5, 
         } 
         if square in centralSquares:
-            return 1.7
+            return 1.2
         semiCentralSquares = {
             chess.C3, chess.C4, chess.C5, chess.C6, 
             chess.D3, chess.D6, 
@@ -162,7 +159,7 @@ class GiveawayChessAgent:
             chess.E3, chess.E4, chess.E5, chess.E6
         } 
         if square in semiCentralSquares:
-            return 1.3
+            return 1.1
         return 1
     
     # square is in colour's end if it is in the two rows where colours pieces start at the begining of the game 
@@ -188,11 +185,11 @@ class GiveawayChessAgent:
     def pieceValueLocationWeightHeuristic(self,board, depth) -> float:
         pieceValues = {
             chess.PAWN: 2,
-            chess.KING: 1,
-            chess.ROOK: 5,
-            chess.KNIGHT: 2,
-            chess.BISHOP: 6,
-            chess.QUEEN: 10
+            chess.KING: 8,
+            chess.ROOK: 14,
+            chess.KNIGHT: 8,
+            chess.BISHOP: 14,
+            chess.QUEEN: 28
         }
 
         (isEndGame, score) = board.checkIfEndGame()
